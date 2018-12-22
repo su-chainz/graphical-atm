@@ -109,7 +109,7 @@ public class CreateView extends JPanel implements ActionListener {
 		month.setBounds(205, 160, 85, 30);
 
 		int x = 0;
-		Integer[] days = new Integer[32];
+		Integer[] days = new Integer[31];
 		for (int i = 1; i <= 31; i++) {
 			days[x] = i;
 			x++;
