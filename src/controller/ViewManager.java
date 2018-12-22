@@ -2,10 +2,7 @@ package controller;
 
 import java.awt.CardLayout;
 import java.awt.Container;
-import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
-
 import data.Database;
 import model.BankAccount;
 import view.ATM;
@@ -40,17 +37,36 @@ public class ViewManager {
 	 */
 	
 	public void login(String accountNumber, char[] pin) {
-		account = db.getAccount(Long.valueOf(accountNumber), Integer.valueOf(new String(pin)));
-		
-		if (account == null) {
-			LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
-			lv.updateErrorMessage("Invalid account number and/or PIN.");
-		} else {
-			switchTo(ATM.HOME_VIEW);
+		try {
+			account = db.getAccount(Long.valueOf(accountNumber), Integer.valueOf(new String(pin)));
 			
-			LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
-			lv.updateErrorMessage("");
+			if (account == null) {
+				LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
+				lv.updateErrorMessage("Invalid account number and/or PIN.");
+			} else {
+				switchTo(ATM.HOME_VIEW);
+				
+				LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
+				lv.updateErrorMessage("");
+			}
+		} catch (NumberFormatException e) {
+			// ignore
 		}
+	}
+	
+	public void logout() {
+		int choice = JOptionPane.showConfirmDialog(
+			views,
+			"Are you sure?",
+			"Shutdown ATM",
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.QUESTION_MESSAGE
+		);
+			
+		if (choice == 0) {
+			account = null;
+			switchTo(ATM.LOGIN_VIEW);
+		}	
 	}
 	
 	/**

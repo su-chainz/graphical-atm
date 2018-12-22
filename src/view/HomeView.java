@@ -4,14 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-
+import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import controller.ViewManager;
 
 @SuppressWarnings("serial")
 public class HomeView extends JPanel implements ActionListener {
 	
+	private JButton logoutButton;
 	private ViewManager manager;		// manages interactions between the views, model, and database
 	
 	/**
@@ -27,6 +27,13 @@ public class HomeView extends JPanel implements ActionListener {
 		initialize();
 	}
 	
+	private void initLogoutButton() {
+		logoutButton = new JButton("Logout");
+		logoutButton.setBounds(30, 30, 200, 35);
+		logoutButton.addActionListener(this);
+
+		this.add(logoutButton);
+	}
 	///////////////////// PRIVATE METHODS /////////////////////////////////////////////
 	
 	/*
@@ -49,6 +56,8 @@ public class HomeView extends JPanel implements ActionListener {
 		//
 		// feel free to use my layout in LoginView as an example for laying out and
 		// positioning your components.
+
+		initLogoutButton();
 	}
 	
 	/*
@@ -72,7 +81,10 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		Object source = e.getSource();
+		if (source.equals(logoutButton)) {
+			manager.logout();			
+		}
 		// TODO
 		//
 		// this is where you'll setup your action listener, which is responsible for
