@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controller.ViewManager;
+import model.User;
+import model.BankAccount;
+import data.Database;
 
 @SuppressWarnings("serial")
 public class CreateView extends JPanel implements ActionListener {
@@ -24,8 +27,14 @@ public class CreateView extends JPanel implements ActionListener {
 	private JTextField address;
 	private JTextField city;
 	private JTextField postalCode;
-	private JPasswordField PIN;
+	private JTextField pin;
 	private JButton logoutButton;
+	private JComboBox<Integer> month;
+	private JComboBox<Integer> year;
+	private JComboBox<Integer> day;
+	private JComboBox<String> state;
+	private JButton submit;
+	
 
 	private ViewManager manager; // manages interactions between the views, model, and database
 
@@ -62,7 +71,9 @@ public class CreateView extends JPanel implements ActionListener {
 		initPostalCode();
 		initPIN();
 		initLogoutButton();
-
+		initSubmitButton();
+		initAccountNumber();
+		
 		// TODO
 		//
 		// this is where you should build the CreateView (i.e., all the components that
@@ -72,6 +83,14 @@ public class CreateView extends JPanel implements ActionListener {
 		// positioning your components.
 	}
 
+	private void initAccountNumber() {
+		JLabel label = new JLabel("Account Number: " + manager.newAccountNumber());
+		label.setBounds(275, 30, 200, 35);
+		label.setLabelFor(null);
+		label.setFont(new Font("DialogInput", Font.PLAIN, 12));
+		
+		this.add(label);
+	}
 	private void initFirstName() {
 		JLabel label = new JLabel("First Name", SwingConstants.RIGHT);
 		label.setBounds(100, 80, 95, 35);
@@ -103,9 +122,8 @@ public class CreateView extends JPanel implements ActionListener {
 		label.setBounds(55, 160, 140, 35);
 		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
 
-		String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
-				"October", "November", "December" };
-		JComboBox<String> month = new JComboBox<String>(months);
+		Integer[] months = { 01, 02, 03, 04, 05, 06, 07, 8, 9, 10, 11, 12 };
+		month = new JComboBox<Integer>(months);
 		month.setBounds(205, 160, 85, 30);
 
 		int x = 0;
@@ -114,7 +132,8 @@ public class CreateView extends JPanel implements ActionListener {
 			days[x] = i;
 			x++;
 		}
-		JComboBox<Integer> day = new JComboBox<Integer>(days);
+		
+		day = new JComboBox<Integer>(days);
 		day.setBounds(300, 160, 85, 30);
 		int m = 0;
 		Integer[] years = new Integer[119];
@@ -123,7 +142,7 @@ public class CreateView extends JPanel implements ActionListener {
 			m++;
 		}
 
-		JComboBox<Integer> year = new JComboBox<Integer>(years);
+		year = new JComboBox<Integer>(years);
 		year.setBounds(400, 160, 85, 30);
 
 		this.add(label);
@@ -184,13 +203,13 @@ public class CreateView extends JPanel implements ActionListener {
 	private void initPIN() {
 		JLabel label = new JLabel("PIN", SwingConstants.RIGHT);
 		label.setBounds(75, 360, 120, 35);
-		label.setLabelFor(PIN);
+		label.setLabelFor(pin);
 		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
 
-		PIN = new JPasswordField(5);
-		PIN.setBounds(205, 360, 200, 35);
+		pin = new JTextField(5);
+		pin.setBounds(205, 360, 200, 35);
 		this.add(label);
-		this.add(PIN);
+		this.add(pin);
 	}
 
 	private void initState() {
@@ -201,7 +220,7 @@ public class CreateView extends JPanel implements ActionListener {
 				"KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM",
 				"NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV",
 				"WY" };
-		JComboBox<String> state = new JComboBox<String>(states);
+		state = new JComboBox<String>(states);
 		state.setBounds(205, 400, 85, 30);
 
 		this.add(label);
@@ -211,10 +230,18 @@ public class CreateView extends JPanel implements ActionListener {
 
 	private void initLogoutButton() {
 		logoutButton = new JButton("Logout");
-		logoutButton.setBounds(150, 30, 200, 35);
+		logoutButton.setBounds(50, 30, 200, 35);
 		logoutButton.addActionListener(this);
 
 		this.add(logoutButton);
+	}
+	
+	private void initSubmitButton() {
+		submit = new JButton("Submit");
+		submit.setBounds(150, 440, 200, 35);
+		submit.addActionListener(this);
+		
+		this.add(submit);
 	}
 	/*
 	 * CreateView is not designed to be serialized, and attempts to serialize will
@@ -243,6 +270,17 @@ public class CreateView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 		if (source.equals(logoutButton)) {
 			manager.logout();
+			this.removeAll();
+			this.initialize();
+		}
+		
+		if (source.equals(submit)) {
+			User user = new User(Integer.parseInt(pin.getText()), (int) year.getSelectedItem() * 1000 + (int) day.getSelectedItem() + (int) month.getSelectedItem() * 100, (long) Long.parseLong(phoneNumber.getText()), firstName.getText(), lastName.getText(), address.getText(), city.getText(), state.getSelectedItem().toString(), postalCode.getText());
+			BankAccount account = new BankAccount('y', manager.newAccountNumber(), 0, user);
+			manager.insertAccount(account);
+			manager.switchTo(ATM.LOGIN_VIEW);
+			this.removeAll();
+			this.initialize();
 		}
 
 		// TODO

@@ -54,6 +54,14 @@ public class ViewManager {
 		}
 	}
 	
+	public void insertAccount(BankAccount account) {
+		db.insertAccount(account);
+	}
+	
+	public long newAccountNumber() {
+		return db.getMaxAccountNumber() + 1;
+	}
+	
 	public void logout() {
 		int choice = JOptionPane.showConfirmDialog(
 			views,

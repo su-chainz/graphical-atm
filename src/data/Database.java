@@ -109,6 +109,23 @@ public class Database {
 	 * @return true if the insert is successful; false otherwise.
 	 */
 	
+	public long getMaxAccountNumber() {
+		try {
+			stmt = conn.createStatement();
+			
+			PreparedStatement selectStmt = conn.prepareStatement("SELECT MAX(account_number) FROM accounts");
+			
+			rs = selectStmt.executeQuery();
+			if (rs.next()) {
+				return rs.getLong(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
 	public boolean insertAccount(BankAccount account) {
 		try {
 			stmt = conn.createStatement();
