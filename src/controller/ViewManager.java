@@ -8,6 +8,8 @@ import model.BankAccount;
 import view.ATM;
 import view.HomeView;
 import view.LoginView;
+import view.WithdrawView;
+
 
 public class ViewManager {
 	

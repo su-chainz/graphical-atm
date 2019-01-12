@@ -19,15 +19,16 @@ import model.BankAccount;
 import data.Database;
 
 @SuppressWarnings("serial")
-public class WithdrawView extends JPanel implements ActionListener {
+public class TransferView extends JPanel implements ActionListener {
 
 	private JButton logoutButton;
-	private JTextField withdrawAmount;
+	private JTextField transferAmount;
+	private JTextField transferRecipient;
 	private JButton submit;
 	
 	private ViewManager manager;
 
-	public WithdrawView(ViewManager manager) {
+	public TransferView(ViewManager manager) {
 		super();
 
 		this.manager = manager;
@@ -38,7 +39,8 @@ public class WithdrawView extends JPanel implements ActionListener {
 		this.setLayout(null);
 		this.add(new javax.swing.JLabel("WithdrawView", javax.swing.SwingConstants.CENTER));
 		initLogoutButton();
-		initWithdrawAmount();
+		initTransferAmount();
+		initTransferRecipient();
 		initSubmitButton();
 	}
 
@@ -50,16 +52,28 @@ public class WithdrawView extends JPanel implements ActionListener {
 		this.add(logoutButton);
 	}
 	
-	private void initWithdrawAmount() {
+	private void initTransferAmount() {
 		JLabel label = new JLabel("Amount:", SwingConstants.RIGHT);
 		label.setBounds(75, 200, 120, 35);
-		label.setLabelFor(withdrawAmount);
+		label.setLabelFor(transferAmount);
 		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
 
-		withdrawAmount = new JTextField(20);
-		withdrawAmount.setBounds(205, 200, 200, 35);
+		transferAmount = new JTextField(20);
+		transferAmount.setBounds(205, 200, 200, 35);
 		this.add(label);
-		this.add(withdrawAmount);
+		this.add(transferAmount);
+	}
+	
+	private void initTransferRecipient() {
+		JLabel label = new JLabel("Recipient:", SwingConstants.RIGHT);
+		label.setBounds(75, 240, 120, 35);
+		label.setLabelFor(transferRecipient);
+		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
+
+		transferRecipient = new JTextField(20);
+		transferRecipient.setBounds(205, 240, 200, 35);
+		this.add(label);
+		this.add(transferRecipient);
 	}
 	
 	private void initSubmitButton() {
