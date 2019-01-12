@@ -206,7 +206,7 @@ public class CreateView extends JPanel implements ActionListener {
 		label.setLabelFor(pin);
 		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
 
-		pin = new JTextField(5);
+		pin = new JTextField(4);
 		pin.setBounds(205, 360, 200, 35);
 		this.add(label);
 		this.add(pin);
@@ -229,7 +229,7 @@ public class CreateView extends JPanel implements ActionListener {
 	}
 
 	private void initLogoutButton() {
-		logoutButton = new JButton("Logout");
+		logoutButton = new JButton("Cancel");
 		logoutButton.setBounds(50, 30, 200, 35);
 		logoutButton.addActionListener(this);
 
@@ -277,6 +277,8 @@ public class CreateView extends JPanel implements ActionListener {
 		if (source.equals(submit)) {
 			User user = new User(Integer.parseInt(pin.getText()), (int) year.getSelectedItem() * 1000 + (int) day.getSelectedItem() + (int) month.getSelectedItem() * 100, (long) Long.parseLong(phoneNumber.getText()), firstName.getText(), lastName.getText(), address.getText(), city.getText(), state.getSelectedItem().toString(), postalCode.getText());
 			BankAccount account = new BankAccount('y', manager.newAccountNumber(), 0, user);
+			manager.setAccount(account);
+			manager.getAccount().setUser(user);
 			manager.insertAccount(account);
 			manager.switchTo(ATM.LOGIN_VIEW);
 			this.removeAll();

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controller.ViewManager;
+import view.LoginView;
 
 @SuppressWarnings("serial")
 public class LoginView extends JPanel implements ActionListener {
@@ -30,7 +31,7 @@ public class LoginView extends JPanel implements ActionListener {
 	private JButton loginButton;			// button that redirects users to the HomeView (if credentials match)
 	private JButton createButton;			// button that directs users to the CreateView
 	private JButton powerButton;			// button that powers off the ATM
-	private JTextField accountField;		// textfield where the user enters his or her account number
+	public JTextField accountField;			// textfield where the user enters his or her account number
 	private JPasswordField pinField;		// textfield where the user enters his or her PIN
 	private JLabel errorMessageLabel;		// label for potential error messages
 	

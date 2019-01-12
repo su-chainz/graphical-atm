@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import data.Database;
 import model.BankAccount;
 import view.ATM;
+import view.HomeView;
 import view.LoginView;
 
 public class ViewManager {
@@ -44,6 +45,8 @@ public class ViewManager {
 				LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
 				lv.updateErrorMessage("Invalid account number and/or PIN.");
 			} else {
+				HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+				hv.setAccount(account);
 				switchTo(ATM.HOME_VIEW);
 				
 				LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
@@ -53,6 +56,10 @@ public class ViewManager {
 			// ignore
 		}
 	}
+	public void showLabels() {
+		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+		hv.initAccountNumber();
+	}
 	
 	public void insertAccount(BankAccount account) {
 		db.insertAccount(account);
@@ -60,6 +67,17 @@ public class ViewManager {
 	
 	public long newAccountNumber() {
 		return db.getMaxAccountNumber() + 1;
+	}
+	
+	public long getAccountNumber() {
+		try {
+			System.out.println(account.getAccountNumber());
+			return account.getAccountNumber();
+		}
+		catch (NullPointerException e) {
+			return -1;
+		}
+		
 	}
 	
 	public void logout() {
@@ -110,4 +128,14 @@ public class ViewManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public BankAccount getAccount() {
+		return account;
+	}
+
+	public void setAccount(BankAccount account) {
+		this.account = account;
+	}
+	
+	
 }
