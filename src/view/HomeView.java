@@ -20,6 +20,7 @@ public class HomeView extends JPanel implements ActionListener {
 	private JButton withdrawButton;
 	private JButton depositButton;
 	private JButton transferButton;
+	private JButton informationButton;
 	private ViewManager manager;		// manages interactions between the views, model, and database
 	private JLabel accountNumberLabel;
 	private BankAccount account;
@@ -70,11 +71,19 @@ public class HomeView extends JPanel implements ActionListener {
 		this.add(transferButton);
 	}
 	
+	private void initInformationButton() {
+		informationButton = new JButton("Information");
+		informationButton.setBounds(30, 240, 200, 35);
+		informationButton.addActionListener(this);
+
+		this.add(informationButton);
+	}
+	
 	public void initAccountNumber() {
 		accountNumberLabel = new JLabel();
 		accountNumberLabel.setText("Hello " + account.getUser().getFirstName() + " " + account.getUser().getLastName() + ", your account number is " + account.getAccountNumber() + " and your balance is " + account.getBalance());
-		accountNumberLabel.setBounds(10, 75, 800, 35);
-		accountNumberLabel.setFont(new Font("DialogInput", Font.PLAIN, 12));
+		accountNumberLabel.setBounds(10, 75, 500, 35);
+		accountNumberLabel.setFont(new Font("DialogInput", Font.PLAIN, 8));
 		
 		this.add(accountNumberLabel);
 	}
@@ -107,11 +116,14 @@ public class HomeView extends JPanel implements ActionListener {
 		initWithdrawButton();
 		initDepositButton();
 		initTransferButton();
+		initInformationButton();
 	}
 	
 	public void setAccount(BankAccount account) {
 		this.account = account;
 		this.user = account.getUser();
+		this.removeAll();
+		this.initialize();
 		initAccountNumber();
 	}
 	
@@ -141,13 +153,20 @@ public class HomeView extends JPanel implements ActionListener {
 			manager.logout();			
 		} 
 		if (source.equals(withdrawButton)) {
+			this.remove(accountNumberLabel);
 			manager.switchTo(ATM.WITHDRAW_VIEW);
 		} 
 		if (source.equals(depositButton)) {
+			this.remove(accountNumberLabel);
 			manager.switchTo(ATM.DEPOSIT_VIEW);
 		} 
 		if (source.equals(transferButton)) {
+			this.remove(accountNumberLabel);
 			manager.switchTo(ATM.TRANSFER_VIEW);
+		} 
+		if (source.equals(informationButton)) {
+			this.remove(accountNumberLabel);
+			manager.switchTo(ATM.INFORMATION_VIEW);
 		} 
 		// TODO
 		//

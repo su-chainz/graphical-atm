@@ -82,6 +82,24 @@ public class ViewManager {
 		
 	}
 	
+	public void initAccountNumber () {
+		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+		hv.initAccountNumber();
+	}
+	
+	public int deposit(double amount) {
+		return account.deposit(amount);
+	}
+	
+	public int withdraw(double amount) {
+		return account.withdraw(amount);
+	}
+	public int transfer(BankAccount destination, double amount) {
+		return account.transfer(destination, amount);
+	}
+	public BankAccount getAccount(long accountNumber) {
+		return db.getAccount(accountNumber);
+	}
 	public void logout() {
 		int choice = JOptionPane.showConfirmDialog(
 			views,
@@ -139,5 +157,11 @@ public class ViewManager {
 		this.account = account;
 	}
 	
+	public boolean updateAccount(BankAccount account) {
+		return db.updateAccount(account);
+	}
 	
+	public boolean updateDestinationAccount(BankAccount destination) {
+		return db.updateAccount(destination);
+	}
 }

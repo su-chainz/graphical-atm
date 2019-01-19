@@ -79,9 +79,20 @@ public class WithdrawView extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source.equals(logoutButton)) {
+			this.removeAll();
+			this.initialize();
+			manager.initAccountNumber();
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 		if (source.equals(submit)) {
+			int status = manager.withdraw(Double.parseDouble(withdrawAmount.getText()));
+			
+			System.out.println("status: " + status);
+			
+			// check status
+			manager.initAccountNumber();
+			this.removeAll();
+			this.initialize();
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 	}

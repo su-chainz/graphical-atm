@@ -26,6 +26,7 @@ public class DepositView extends JPanel implements ActionListener {
 	private JButton submit;
 	
 	private ViewManager manager;
+	private BankAccount account;
 
 	public DepositView(ViewManager manager) {
 		super();
@@ -80,9 +81,21 @@ public class DepositView extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source.equals(logoutButton)) {
+			this.removeAll();
+			this.initialize();
+			manager.initAccountNumber();
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 		if (source.equals(submit)) {
+//			account.setBalance(account.getBalance() + Double.parseDouble(depositAmount.getText()));
+			int status = manager.deposit(Double.parseDouble(depositAmount.getText()));
+			
+			System.out.println("status: " + status);
+			
+			// check status
+			manager.initAccountNumber();
+			this.removeAll();
+			this.initialize();
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 	}

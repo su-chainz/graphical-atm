@@ -74,6 +74,10 @@ public class BankAccount {
 		return balance;
 	}
 	
+	public void setBalance(double balance) {
+		this.balance = balance; 
+	}
+	
 	/**
 	 * Retrieves the user associated with this account.
 	 * 
@@ -172,7 +176,7 @@ public class BankAccount {
 	 * @return the balance formatted as $###,###.##.
 	 */
 	
-	private String getFormattedBalance() {
+	public String getFormattedBalance() {
 		return NumberFormat.getCurrencyInstance(Locale.US).format(balance);
 	}
 	
