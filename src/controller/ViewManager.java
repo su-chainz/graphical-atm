@@ -9,6 +9,7 @@ import view.ATM;
 import view.HomeView;
 import view.LoginView;
 import view.WithdrawView;
+import view.InformationView;
 
 
 public class ViewManager {
@@ -71,6 +72,8 @@ public class ViewManager {
 		return db.getMaxAccountNumber() + 1;
 	}
 	
+	
+	
 	public long getAccountNumber() {
 		try {
 			System.out.println(account.getAccountNumber());
@@ -80,12 +83,16 @@ public class ViewManager {
 			return -1;
 		}
 		
+	
+		
 	}
 	
-	public void initAccountNumber () {
+	public void initAccountNumber() {
 		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
 		hv.initAccountNumber();
 	}
+	
+	
 	
 	public int deposit(double amount) {
 		return account.deposit(amount);
@@ -94,8 +101,11 @@ public class ViewManager {
 	public int withdraw(double amount) {
 		return account.withdraw(amount);
 	}
-	public int transfer(BankAccount destination, double amount) {
-		return account.transfer(destination, amount);
+	public void transfer(long accountNumber, double amount) {
+		this.destination = db.getAccount(accountNumber);
+		account.transfer(destination, amount);
+		updateAccount(account);
+		updateAccount(destination);
 	}
 	public BankAccount getAccount(long accountNumber) {
 		return db.getAccount(accountNumber);
@@ -122,6 +132,10 @@ public class ViewManager {
 	 */
 	
 	public void switchTo(String view) {
+//		if (view == ATM.INFORMATION_VIEW) {
+//			InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
+//			iv.setAccount(account);
+//		}
 		((CardLayout) views.getLayout()).show(views, view);
 	}
 	
@@ -155,6 +169,11 @@ public class ViewManager {
 
 	public void setAccount(BankAccount account) {
 		this.account = account;
+	}
+	
+	public void setAccountInfo(BankAccount account) {
+		InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
+		iv.setAccount(account);
 	}
 	
 	public boolean updateAccount(BankAccount account) {

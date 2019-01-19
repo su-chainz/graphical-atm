@@ -167,6 +167,7 @@ public class HomeView extends JPanel implements ActionListener {
 		if (source.equals(informationButton)) {
 			this.remove(accountNumberLabel);
 			manager.switchTo(ATM.INFORMATION_VIEW);
+			manager.setAccount(account);
 		} 
 		// TODO
 		//

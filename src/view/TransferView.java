@@ -99,10 +99,7 @@ public class TransferView extends JPanel implements ActionListener {
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 		if (source.equals(submit)) {
-			int status = manager.transfer(manager.getAccount(Long.parseLong(transferRecipient.getText())), Double.parseDouble(transferAmount.getText()));
-			manager.updateAccount(manager.getAccount(Long.parseLong(transferRecipient.getText())));
-			manager.updateAccount(manager.getAccount(manager.getAccountNumber()));
-			System.out.println("status: " + status);
+			manager.transfer(Long.parseLong(transferRecipient.getText()), Double.parseDouble(transferAmount.getText()));
 			System.out.println(manager.getAccount(Long.parseLong(transferRecipient.getText())));
 			
 			manager.initAccountNumber();
