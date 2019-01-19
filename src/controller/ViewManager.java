@@ -94,7 +94,7 @@ public class ViewManager {
 	
 	public void initFirstName() {
 		InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
-		iv.initFirstName();
+		iv.initInfo();
 	}
 	
 	
@@ -139,7 +139,7 @@ public class ViewManager {
 		if (view == ATM.INFORMATION_VIEW) {
 			InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
 			iv.setAccount(account);
-			iv.initFirstName();
+			iv.initInfo();
 		}
 		((CardLayout) views.getLayout()).show(views, view);
 	}

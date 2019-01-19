@@ -81,7 +81,7 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	public void initAccountNumber() {
 		accountNumberLabel = new JLabel();
-		accountNumberLabel.setText("Hello " + account.getUser().getFirstName() + " " + account.getUser().getLastName() + ", your account number is " + account.getAccountNumber() + " and your balance is " + account.getBalance());
+		accountNumberLabel.setText("Hello " + account.getUser().getFirstName() + " " + account.getUser().getLastName() + ", your account number is " + account.getAccountNumber() + " and your balance is " + account.getFormattedBalance());
 		accountNumberLabel.setBounds(10, 75, 500, 35);
 		accountNumberLabel.setFont(new Font("DialogInput", Font.PLAIN, 8));
 		

@@ -23,8 +23,22 @@ public class InformationView extends JPanel implements ActionListener {
 
 	private JButton logoutButton;
 	private JButton edit;
+	private JButton save;
+	
+	JTextField accountNumber;
+	JTextField firstName;
+	JTextField lastName;
+	JTextField address;
+	JTextField city;
+	JTextField state;
+	JTextField postalCode;
+	JTextField dob;
+	JTextField phoneNumber;
+	JTextField pin;
+	
 	private BankAccount account;
 	private User user;
+	private boolean editable = false;
 	
 	private ViewManager manager;
 
@@ -46,9 +60,22 @@ public class InformationView extends JPanel implements ActionListener {
 		this.setLayout(null);
 		this.add(new javax.swing.JLabel("InformationView", javax.swing.SwingConstants.CENTER));
 		initLogoutButton();
-		initFirstName();
 	}
-
+	
+	public void initInfo() {
+		initAccountNumber();
+		initFirstName();
+		initLasttName();
+		initAddress();
+		initCity();
+		initState();
+		initPostalCode();
+		initDob();
+		initPhoneNumber();
+		initPin();
+		initEditSaveButton();
+	}
+	
 	private void initLogoutButton() {
 		logoutButton = new JButton("Back to Home");
 		logoutButton.setBounds(50, 30, 200, 35);
@@ -56,95 +83,112 @@ public class InformationView extends JPanel implements ActionListener {
 		this.add(logoutButton);
 	}
 	
+	public void initAccountNumber() {
+		accountNumber = new JTextField(20);
+		accountNumber.setBounds(100, 70, 200, 35);
+		accountNumber.setText("" + account.getAccountNumber());
+		accountNumber.setEditable(false);
+
+		this.add(accountNumber);
+	}
+	
 	public void initFirstName() {
-		JLabel label = new JLabel("Name: " + account.getUser().getFirstName() + " " + account.getUser().getLastName(), SwingConstants.RIGHT);
-		label.setBounds(100, 80, 95, 35);
-		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
+		firstName = new JTextField(20);
+		firstName.setBounds(100, 110, 200, 35);
+		firstName.setText(account.getUser().getFirstName());
+		firstName.setEditable(false);
 
+		this.add(firstName);
+	}
+	
+	public void initLasttName() {
+		lastName = new JTextField(20);
+		lastName.setBounds(100, 150, 200, 35);
+		lastName.setText(account.getUser().getLastName());
+		lastName.setEditable(false);
 
-		this.add(label);
+		this.add(lastName);
+	}
+	
+	public void initAddress() {
+		address = new JTextField(50);
+		address.setBounds(100, 190, 200, 35);
+		address.setText(account.getUser().getStreetAddress());
+		address.setEditable(editable);
+		
+		this.add(address);
+	}
+	
+	public void initCity() {
+		city = new JTextField(50);
+		city.setBounds(100, 230, 200, 35);
+		city.setText(account.getUser().getCity());
+		city.setEditable(editable);
+		
+		this.add(city);
+	}
+	
+	public void initState() {
+		state = new JTextField(20);
+		state.setBounds(100, 270, 200, 35);
+		state.setText(account.getUser().getState());
+		state.setEditable(editable);
+		
+		this.add(state);
+	}
+	
+	public void initPostalCode() {
+		postalCode = new JTextField(20);
+		postalCode.setBounds(100, 310, 200, 35);
+		postalCode.setText(account.getUser().getZip());
+		postalCode.setEditable(editable);
+		
+		this.add(postalCode);
+	}
+	
+	public void initDob() {
+		dob = new JTextField(20);
+		dob.setBounds(100, 310, 200, 35);
+		dob.setText("" + account.getUser().getDob());
+		dob.setEditable(false);
+		
+		this.add(dob);
+	}
+	
+	public void initPhoneNumber() {
+		phoneNumber = new JTextField(20);
+		phoneNumber.setBounds(100, 350, 200, 35);
+		phoneNumber.setText("" + account.getUser().getPhone());
+		phoneNumber.setEditable(editable);
+		
+		this.add(phoneNumber);
+	}
+	
+	public void initPin() {
+		pin = new JTextField(20);
+		pin.setBounds(100, 390, 200, 35);
+		pin.setText("" + account.getUser().getPin());
+		pin.setEditable(editable);
+		
+		this.add(pin);
+	}
+	
+	private void initEditSaveButton() {
+		if(editable == false) {
+			edit = new JButton("Edit");
+			edit.setBounds(150, 440, 200, 35);
+			edit.addActionListener(this);
+			
+			this.add(edit);
+		} else if (editable == true) {
+			save = new JButton("Save");
+			save.setBounds(150, 440, 200, 35);
+			save.addActionListener(this);
+			
+			this.add(save);
+		}
 
 	}
-
-//	private void initDatePicker() {
-//		JLabel label = new JLabel("Date of Birth", SwingConstants.RIGHT);
-//		label.setBounds(55, 160, 140, 35);
-//		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
-//
-//		Integer[] months = { 01, 02, 03, 04, 05, 06, 07, 8, 9, 10, 11, 12 };
-//
-//		int x = 0;
-//		Integer[] days = new Integer[31];
-//		for (int i = 1; i <= 31; i++) {
-//			days[x] = i;
-//			x++;
-//		}
-//
-//		int m = 0;
-//		Integer[] years = new Integer[119];
-//		for (int i = 1900; i <= 2018; i++) {
-//			years[m] = i;
-//			m++;
-//		}
-//
-//		this.add(label);
-//
-//	}
-//
-//	private void initPhoneNumber() {
-//		JLabel label = new JLabel("Phone Number", SwingConstants.RIGHT);
-//		label.setBounds(75, 200, 120, 35);
-//		label.setLabelFor(phoneNumber);
-//		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
-//
-//
-//		// TO DO make it split into 4 segments
-//		this.add(label);
-//	}
-//
-//	private void initAddress() {
-//		JLabel label = new JLabel("Street Address", SwingConstants.RIGHT);
-//		label.setBounds(75, 240, 120, 35);
-//		label.setLabelFor(address);
-//		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
-//
-//
-//		this.add(label);
-//
-//	}
-//
-//	private void initCity() {
-//		JLabel label = new JLabel("City", SwingConstants.RIGHT);
-//		label.setBounds(75, 280, 120, 35);
-//		label.setLabelFor(city);
-//		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
-//
-//		this.add(label);
-//
-//	}
-//
-//	private void initPostalCode() {
-//		JLabel label = new JLabel("Postal Code", SwingConstants.RIGHT);
-//		label.setBounds(75, 320, 120, 35);
-//		label.setLabelFor(postalCode);
-//		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
-//
-//		this.add(label);
-//
-//	}
-//	
-//	private void initState() {
-//		JLabel label = new JLabel("State", SwingConstants.RIGHT);
-//		label.setBounds(60, 400, 140, 35);
-//		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
-//		String[] states = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN",
-//				"KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM",
-//				"NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV",
-//				"WY" };
-//
-//		this.add(label);
-//
-//	}
 	
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 		throw new IOException("ERROR The WithdrawView class is not serializable.");
@@ -157,15 +201,28 @@ public class InformationView extends JPanel implements ActionListener {
 		if (source.equals(logoutButton)) {
 			this.removeAll();
 			this.initialize();
+			initInfo();
 			manager.initAccountNumber();
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 		if (source.equals(edit)) {
-
-			manager.initAccountNumber();
+			editable = true;
 			this.removeAll();
 			this.initialize();
-			manager.switchTo(ATM.HOME_VIEW);
+			initInfo();
+		}
+		if (source.equals(save)) {
+			user.setStreetAddress(address.getText());
+			user.setCity(city.getText());
+			user.setState(state.getText());
+			user.setZip(postalCode.getText());
+			user.setPhone(Long.parseLong(phoneNumber.getText()));
+			user.setPin(user.getPin(), Integer.parseInt(pin.getText()));
+			manager.updateAccount(account);
+			editable = false;
+			this.removeAll();
+			this.initialize();
+			initInfo();
 		}
 	}
 }
