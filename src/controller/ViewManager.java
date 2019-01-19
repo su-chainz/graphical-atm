@@ -92,6 +92,10 @@ public class ViewManager {
 		hv.initAccountNumber();
 	}
 	
+	public void initFirstName() {
+		InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
+		iv.initFirstName();
+	}
 	
 	
 	public int deposit(double amount) {
@@ -132,10 +136,11 @@ public class ViewManager {
 	 */
 	
 	public void switchTo(String view) {
-//		if (view == ATM.INFORMATION_VIEW) {
-//			InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
-//			iv.setAccount(account);
-//		}
+		if (view == ATM.INFORMATION_VIEW) {
+			InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
+			iv.setAccount(account);
+			iv.initFirstName();
+		}
 		((CardLayout) views.getLayout()).show(views, view);
 	}
 	

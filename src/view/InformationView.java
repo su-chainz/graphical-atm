@@ -56,7 +56,7 @@ public class InformationView extends JPanel implements ActionListener {
 		this.add(logoutButton);
 	}
 	
-	private void initFirstName() {
+	public void initFirstName() {
 		JLabel label = new JLabel("Name: " + account.getUser().getFirstName() + " " + account.getUser().getLastName(), SwingConstants.RIGHT);
 		label.setBounds(100, 80, 95, 35);
 		label.setFont(new Font("DialogInput", Font.PLAIN, 14));
