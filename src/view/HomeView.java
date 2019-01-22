@@ -21,6 +21,7 @@ public class HomeView extends JPanel implements ActionListener {
 	private JButton depositButton;
 	private JButton transferButton;
 	private JButton informationButton;
+	private JButton closeButton;
 	private ViewManager manager;		// manages interactions between the views, model, and database
 	private JLabel accountNumberLabel;
 	private BankAccount account;
@@ -61,6 +62,14 @@ public class HomeView extends JPanel implements ActionListener {
 		depositButton.addActionListener(this);
 
 		this.add(depositButton);
+	}
+	
+	private void initCloseButton() {
+		closeButton = new JButton("Close");
+		closeButton.setBounds(30, 280, 200, 35);
+		closeButton.addActionListener(this);
+
+		this.add(closeButton);
 	}
 	
 	private void initTransferButton() {
@@ -117,6 +126,7 @@ public class HomeView extends JPanel implements ActionListener {
 		initDepositButton();
 		initTransferButton();
 		initInformationButton();
+		initCloseButton();
 	}
 	
 	public void setAccount(BankAccount account) {
@@ -168,6 +178,9 @@ public class HomeView extends JPanel implements ActionListener {
 			this.remove(accountNumberLabel);
 			manager.switchTo(ATM.INFORMATION_VIEW);
 			manager.setAccount(account);
+		} 
+		if (source.equals(closeButton)) {
+			manager.closeAccount();
 		} 
 		// TODO
 		//

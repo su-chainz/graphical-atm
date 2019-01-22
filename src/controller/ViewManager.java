@@ -44,7 +44,7 @@ public class ViewManager {
 		try {
 			account = db.getAccount(Long.valueOf(accountNumber), Integer.valueOf(new String(pin)));
 			
-			if (account == null) {
+			if (account == null || account.getStatus() == 'N') {
 				LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
 				lv.updateErrorMessage("Invalid account number and/or PIN.");
 			} else {
@@ -64,6 +64,17 @@ public class ViewManager {
 		hv.initAccountNumber();
 	}
 	
+	public void closeAccount() {
+		db.closeAccount(account);
+		setAccount(null);
+		setDestination(null);
+		switchTo(ATM.LOGIN_VIEW);
+	}
+	
+	private void setDestination(BankAccount destination) {
+		this.destination = destination;
+	}
+
 	public void insertAccount(BankAccount account) {
 		db.insertAccount(account);
 	}

@@ -180,7 +180,7 @@ public class InformationView extends JPanel implements ActionListener {
 			edit.addActionListener(this);
 			
 			this.add(edit);
-		} else if (editable == true) {
+		} else {
 			save = new JButton("Save");
 			save.setBounds(150, 440, 200, 35);
 			save.addActionListener(this);
@@ -206,10 +206,10 @@ public class InformationView extends JPanel implements ActionListener {
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 		if (source.equals(edit)) {
-			editable = true;
 			this.removeAll();
 			this.initialize();
 			initInfo();
+			editable = true;
 		}
 		if (source.equals(save)) {
 			user.setStreetAddress(address.getText());
